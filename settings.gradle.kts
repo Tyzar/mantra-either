@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         google {
@@ -16,6 +18,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://repo.repsy.io/mvn/tyzar/mantra-either")
+            val credProp = Properties()
+            credProp.load(File("credential.properties").inputStream())
+
+            credentials {
+                username = credProp.getProperty("repsy_username")
+                password = credProp.getProperty("repsy_pass")
+            }
+        }
     }
 }
 

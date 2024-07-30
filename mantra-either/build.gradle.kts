@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -63,8 +65,15 @@ publishing {
     repositories {
         maven {
             name = "mantra-either"
-            url =
-                uri("${layout.buildDirectory}/repos")
+            url = uri("https://repo.repsy.io/mvn/tyzar/mantra-either")
+
+            val credProp = Properties()
+            credProp.load(project.rootProject.file("credential.properties").inputStream())
+
+            credentials {
+                username = credProp.getProperty("repsy_username")
+                password = credProp.getProperty("repsy_pass")
+            }
         }
     }
 }
