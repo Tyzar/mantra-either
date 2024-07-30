@@ -8,7 +8,7 @@ A simple Android kotlin library to wrap two different possible results as one va
 
 On `settings.gradle.kts`, add custom maven url to `dependencyResolutionManagement`
 ```
-maven {url repsyUrl}
+maven {url uri("https://repo.repsy.io/mvn/tyzar/mantra-either")}
 
 ```
 On app module `build.gradle.kts` add dependency
