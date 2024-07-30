@@ -8,10 +8,10 @@ A simple Android kotlin library to wrap two different possible results as one va
 
 On `settings.gradle.kts`, add custom maven url to `dependencyResolutionManagement`
 ```
-maven {url uri("https://repo.repsy.io/mvn/tyzar/mantra-either")}
+maven { url uri("https://jitpack.io") }
 
 ```
-On app module `build.gradle.kts` add dependency
+On module-level `build.gradle.kts` add dependency
 ```
 implementation com.nokotogi.mantra.either
 
