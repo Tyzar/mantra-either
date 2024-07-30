@@ -59,14 +59,6 @@ publishing {
             }
         }
     }
-
-    repositories {
-        maven {
-            name = "mantra-either"
-            url =
-                uri("${layout.buildDirectory}/repos")
-        }
-    }
 }
 
 dependencies {
