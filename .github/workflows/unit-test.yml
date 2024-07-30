@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.REPOSSH }}
-
       - uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -33,6 +29,3 @@ jobs:
       - name: Run unit test
         if: always()
         run: ./gradlew test
-
-#      - name: Build with Gradle
-#        run: ./gradlew publish
