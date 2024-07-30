@@ -13,7 +13,7 @@ maven { url uri("https://jitpack.io") }
 ```
 On module-level `build.gradle.kts` add dependency
 ```
-implementation com.nokotogi.mantra.either
+implementation com.nokotogi.mantra-either
 
 ```
 # Usage
