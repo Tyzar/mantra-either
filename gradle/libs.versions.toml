@@ -4,13 +4,11 @@ kotlin = "1.9.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 appcompat = "1.7.0"
-mantraEither = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-mantra-either = {group="com.nokotogi" , name="mantra-either", version.ref="mantraEither"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
