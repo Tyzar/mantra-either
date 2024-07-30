@@ -13,7 +13,7 @@ maven {url uri("https://repo.repsy.io/mvn/tyzar/mantra-either")}
 ```
 On app module `build.gradle.kts` add dependency
 ```
-implementation com.nokotogi.mantra.either
+implementation com.nokotogi.mantra.either:v1.0.1-alpha
 
 ```
 # Usage
