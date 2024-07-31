@@ -38,12 +38,12 @@ android {
     }
     compileOptions {
         sourceCompatibility =
-            JavaVersion.VERSION_11
+            JavaVersion.VERSION_17
         targetCompatibility =
-            JavaVersion.VERSION_11
+            JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -52,7 +52,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.nokotogi"
             artifactId = "mantra-either"
-            version = "1.0.2-alpha"
+            version = "1.0.3-alpha"
 
             afterEvaluate {
                 from(components["release"])
