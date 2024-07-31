@@ -1,3 +1,7 @@
+[![](https://jitpack.io/v/Tyzar/mantra-either.svg)](https://jitpack.io/#Tyzar/mantra-either)
+
+
+
 # Mantra Either
 
 A simple Android kotlin library to wrap two different possible results as one value. Value wrapped as either Left or Right depend on how you assign the value to wrapper.
@@ -8,12 +12,25 @@ A simple Android kotlin library to wrap two different possible results as one va
 
 On `settings.gradle.kts`, add custom maven url to `dependencyResolutionManagement`
 ```
-maven {url uri("https://repo.repsy.io/mvn/tyzar/mantra-either")}
+maven {
+            url = uri("https://jitpack.io")
+        }
 
 ```
+or
+```
+maven {
+            url = uri("https://jitpack.io")
+            content {
+                includeGroup("com.github.Tyzar")
+            }
+        }
+
+```
+
 On app module `build.gradle.kts` add dependency
 ```
-implementation com.nokotogi.mantra.either:v1.0.1-alpha
+implementation 'com.github.Tyzar:mantra-either:1.0.3-alpha'
 
 ```
 # Usage
@@ -104,7 +121,7 @@ fun displayMainSectionPage(result:Either<Exception,List<Product>>){
 ### Transform using `Map`
 ```
  fun saveToCache(fetchResult: Either<Exception, ByteArray>): Either<String, List<Data>> {
-        return fetchResult.fold(
+        return fetchResult.map(
             onLeft = { it.message ?: "An error occurred" },
             onRight = { bytes ->
                 decodeBytes(bytes)
