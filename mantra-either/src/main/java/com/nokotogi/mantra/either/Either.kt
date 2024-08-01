@@ -35,19 +35,14 @@ sealed class Either<L, R> {
         }
     }
 
-    fun <T> fold(onRight: (rightValue: R) -> T, onLeft: (leftValue: L) -> T): T {
+    inline fun <T> fold(onRight: (rightValue: R) -> T, onLeft: (leftValue: L) -> T): T {
         return when (this) {
             is Left -> onLeft(this.leftValue)
             is Right -> onRight(this.rightValue)
         }
     }
 
-    fun <M, N> flatMap(mapFunc: (value: Either<L, R>) -> Either<M, N>):
-            Either<M, N> {
-        return mapFunc(this)
-    }
-
-    fun <M, N> map(
+    inline fun <M, N> map(
         onRight: (rightValue: R) -> N,
         onLeft: (leftValue: L) -> M
     ): Either<M, N> {
@@ -57,16 +52,43 @@ sealed class Either<L, R> {
         }
     }
 
-    fun <N> mapRight(onRight: (rightValue: R) -> N): Either<L, N> {
+    inline fun <N> mapRight(onRight: (rightValue: R) -> N): Either<L, N> {
         return when (this) {
             is Left -> Left(this.leftValue)
             is Right -> Right(onRight(this.rightValue))
         }
     }
 
-    fun <M> mapLeft(onLeft: (leftValue: L) -> M): Either<M, R> {
+    inline fun <M> mapLeft(onLeft: (leftValue: L) -> M): Either<M, R> {
         return when (this) {
             is Left -> Left(onLeft(this.leftValue))
+            is Right -> Right(this.rightValue)
+        }
+    }
+
+    inline fun <M, N> pipe(
+        onLeft: (value: L) -> Either<M, N>, onRight: (value: R) -> Either<M, N>
+    ): Either<M, N> {
+        return when (this) {
+            is Left -> onLeft(this.leftValue)
+            is Right -> onRight(this.rightValue)
+        }
+    }
+
+    inline fun <N> pipeRight(
+        onRight: (value: R) -> Either<L, N>
+    ): Either<L, N> {
+        return when (this) {
+            is Left -> Left(this.leftValue)
+            is Right -> onRight(this.rightValue)
+        }
+    }
+
+    inline fun <M> pipeLeft(
+        onLeft: (value: L) -> Either<M, R>
+    ): Either<M, R> {
+        return when (this) {
+            is Left -> onLeft(this.leftValue)
             is Right -> Right(this.rightValue)
         }
     }

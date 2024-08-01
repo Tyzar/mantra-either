@@ -30,7 +30,7 @@ maven {
 
 On app module `build.gradle.kts` add dependency
 ```
-implementation 'com.github.Tyzar:mantra-either:1.0.3-alpha'
+implementation 'com.github.Tyzar:mantra-either:1.0.4'
 
 ```
 # Usage
@@ -117,7 +117,7 @@ fun displayMainSectionPage(result:Either<Exception,List<Product>>){
 ```
 
 ## Transform `Either` to another `Either`
-`Either` can be tranformed into another `Either` with different `Left` and `Right` value type.
+`Either` can be transformed into another `Either` with different `Left` and `Right` value type.
 ### Transform using `Map`
 ```
  fun saveToCache(fetchResult: Either<Exception, ByteArray>): Either<String, List<Data>> {
@@ -128,5 +128,60 @@ fun displayMainSectionPage(result:Either<Exception,List<Product>>){
             }
         )
     }
+
+```
+
+## Transform using `Pipe`
+`Either` also can be transformed to another `Either` using `Pipe`. 
+The main difference between `Map` and `Pipe` is the type of value that returned from function `onLeft` and `onRight`.
+In `Pipe`, function `onLeft` and `onRight` expect return value type of `Either` instead. 
+There are three variants of `Pipe` function, namely `pipe`, `pipeRight`, and `pipeLeft`.
+
+- Function `pipe` expects `onLeft` and `onRight` function to handle input value.
+
+- Function `pipeRight` only expects `onRight` function. Therefore the `Left` value will remains the same as input in pipe output result.
+
+- Function `pipeLeft` only expects `onLeft` function. Therefore the `Right` value will remains the same as input in pipe output result.
+```
+    lifecycleScope.launch {
+            getEvenNumbers(20, 100)
+                .pipeRight {
+                    qualifyANumber(it)
+                }.fold(
+                    onLeft = {
+                        Log.e("Either", it)
+                    },
+                    onRight = {
+                        Log.i("Either", "Number $it is Qualified")
+                    }
+                )
+        }      
+        
+    private suspend fun getEvenNumbers(min: Int, max: Int): Either<String, List<Int>> {
+        delay(3000)
+        if (min >= max) {
+            return Either.Left("Failed to get even numbers")
+        }
+
+        val evens = mutableListOf<Int>()
+        for (i in min..max) {
+            if (i % 2 == 0) {
+                evens.add(i)
+            }
+        }
+
+        return Either.Right(evens)
+    }
+    
+    private suspend fun qualifyANumber(evenNumbers: List<Int>): Either<String, Int> =
+        withContext(Dispatchers.Default) {
+            val randIdx = Random.nextInt(evenNumbers.indices)
+            val selectedNum = evenNumbers[randIdx]
+            return@withContext if (selectedNum % 2 == 0 && selectedNum % 3 == 0) {
+                Either.Right(selectedNum)
+            } else {
+                Either.Left("This number $selectedNum is not qualified!")
+            }
+        }
 
 ```
