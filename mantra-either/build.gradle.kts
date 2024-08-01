@@ -52,7 +52,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.nokotogi"
             artifactId = "mantra-either"
-            version = "1.0.3-alpha"
+            version = "1.0.4"
 
             afterEvaluate {
                 from(components["release"])

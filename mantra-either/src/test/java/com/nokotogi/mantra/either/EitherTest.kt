@@ -88,21 +88,23 @@ class EitherTest {
     }
 
     @Test
-    fun testFlatMapWithRight() {
+    fun testPipeWithRight() {
         val either: Either<String, Int> =
             Either.Right(10)
         val newEither =
-            either.flatMap { value ->
-                return@flatMap when (value) {
-                    is Either.Left -> Either.Left(
+            either.pipe(
+                onLeft = {
+                    Either.Left(
                         "New Left"
                     )
-
-                    is Either.Right -> Either.Right(
-                        "Value ${value.rightValue}"
+                },
+                onRight = {
+                    Either.Right(
+                        "Value $it"
                     )
                 }
-            }
+            )
+
 
         Assert.assertEquals(
             "New right value assertion",
@@ -112,21 +114,21 @@ class EitherTest {
     }
 
     @Test
-    fun testFlatMapWithLeft() {
+    fun testPipeWithLeft() {
         val either: Either<String, Int> =
             Either.Left("10")
-        val newEither =
-            either.flatMap { value ->
-                return@flatMap when (value) {
-                    is Either.Left -> Either.Left(
-                        "New Left ${value.leftValue}"
-                    )
-
-                    is Either.Right -> Either.Right(
-                        "Value ${value.rightValue}"
-                    )
-                }
+        val newEither = either.pipe(
+            onLeft = {
+                Either.Left(
+                    "New Left $it"
+                )
+            },
+            onRight = {
+                Either.Right(
+                    "Value $it"
+                )
             }
+        )
 
         Assert.assertEquals(
             "New left value assertion",
@@ -255,5 +257,45 @@ class EitherTest {
             it.toString()
         })
         Assert.assertEquals("On 30", result)
+    }
+
+    @Test
+    fun testPipeRightWithLeft() {
+        val either: Either<Boolean, Int> = Either.Left(false)
+        val piped = either.pipeRight {
+            Either.Right((it * 3).toString())
+        }
+
+        Assert.assertFalse(piped.getLeft()!!)
+    }
+
+    @Test
+    fun testPipeRightWithRight() {
+        val either: Either<Boolean, Int> = Either.Right(3)
+        val piped = either.pipeRight {
+            Either.Right((it * 3).toString())
+        }
+
+        Assert.assertEquals("9", piped.getRight()!!)
+    }
+
+    @Test
+    fun testPipeLeftWithRight() {
+        val either: Either<Boolean, Int> = Either.Right(1)
+        val piped = either.pipeLeft<Int> {
+            Either.Right(if (it) 2 else 1)
+        }
+
+        Assert.assertEquals(1, piped.getRight())
+    }
+
+    @Test
+    fun testPipeLeftWithLeft() {
+        val either: Either<Boolean, Int> = Either.Left(true)
+        val piped = either.pipeLeft<Int> {
+            Either.Right(if (it) 2 else 1)
+        }
+
+        Assert.assertEquals(2, piped.getRight()!!)
     }
 }
