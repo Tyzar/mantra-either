@@ -136,9 +136,12 @@ fun displayMainSectionPage(result:Either<Exception,List<Product>>){
 The main difference between `Map` and `Pipe` is the type of value that returned from function `onLeft` and `onRight`.
 In `Pipe`, function `onLeft` and `onRight` expect return value type of `Either` instead. 
 There are three variants of `Pipe` function, namely `pipe`, `pipeRight`, and `pipeLeft`.
-Function `pipe` expects `onLeft` and `onRight` function to handle input value.
-Function `pipeRight` only expects `onRight` function. Therefore the `Left` value will remains the same as input in pipe output result.
-Function `pipeLeft` only expects `onLeft` function. Therefore the `Right` value will remains the same as input in pipe output result.
+
+- Function `pipe` expects `onLeft` and `onRight` function to handle input value.
+
+- Function `pipeRight` only expects `onRight` function. Therefore the `Left` value will remains the same as input in pipe output result.
+
+- Function `pipeLeft` only expects `onLeft` function. Therefore the `Right` value will remains the same as input in pipe output result.
 ```
     lifecycleScope.launch {
             getEvenNumbers(20, 100)
