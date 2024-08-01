@@ -30,7 +30,7 @@ maven {
 
 On app module `build.gradle.kts` add dependency
 ```
-implementation 'com.github.Tyzar:mantra-either:1.0.3-alpha'
+implementation 'com.github.Tyzar:mantra-either:1.0.4'
 
 ```
 # Usage
