@@ -33,8 +33,12 @@ On app module `build.gradle.kts` add dependency
 implementation 'com.github.Tyzar:mantra-either:1.0.4'
 
 ```
-Set kotlin jvm target to 17 or newer
+Set kotlin jvmTarget and targetCompatibility to 17 or newer
 ```
+compileOptions {
+        ...
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 kotlinOptions {
     jvmTarget = "17"
 }
