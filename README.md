@@ -33,6 +33,19 @@ On app module `build.gradle.kts` add dependency
 implementation 'com.github.Tyzar:mantra-either:1.0.4'
 
 ```
+Set JDK version to 11 or newer
+```
+compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+kotlinOptions {
+    jvmTarget = "11"
+}
+
+```
+
 # Usage
 
 ## Create `Either`
